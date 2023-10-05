@@ -25,6 +25,10 @@
     @apply text-[18px] leading-[30px] font-[400] text-textColor mt-[18px]
       
   }
+
+  .hero__section{
+    @apply bg-[url('./assets/images/hero-bg.png')] bg-no-repeat bg-cover bg-center py-[75px]
+  }
 }
 
 @media only screen and (max-width:1024px) {
