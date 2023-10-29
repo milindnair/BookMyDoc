@@ -1,5 +1,6 @@
 import Doctor from "../models/doctorModel.js";
 
+
 export async function registerAppointment(req, res) {
     try {
       const { email } = req.params;
@@ -66,6 +67,49 @@ export async function registerAppointment(req, res) {
       return res.status(500).json({ error: 'Internal server error' });
     }
   }
+
+
+;
+
+export async function acceptSlot(req, res) {
+    try {
+      const { slotId } = req.body;
+      const email = 'zm@gmail.com'; // Assuming a fixed email for this example
+  
+      const doctor = await Doctor.findOne({ email });
+  
+      if (!doctor) {
+        return res.status(404).json({ error: 'Doctor not found' });
+      }
+  
+      let acceptedSlot = null;
+  
+      // Iterate over each booking to find and transfer the slot
+      doctor.bookings.forEach(booking => {
+        const falseIndex = booking.slots.false.findIndex(slot => slot._id.toString() === slotId);
+  
+        if (falseIndex !== -1) {
+          // Slot found in false, remove from false and push to true
+          acceptedSlot = booking.slots.false.splice(falseIndex, 1)[0];
+          booking.slots.true.push(acceptedSlot);
+        }
+      });
+  
+      // Save the updated doctor data
+      await doctor.save();
+  
+      if (!acceptedSlot) {
+        return res.status(404).json({ error: 'Slot not found' });
+      }
+  
+      return res.status(200).json({ acceptedSlot });
+    } catch (error) {
+      console.error('Error accepting slot:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+
 
   
   export async function fetchFalseSlots(req, res) {

@@ -45,17 +45,18 @@ const rejectButtonStyle = {
 
 function Appointments() {
   const [falseSlots, setFalseSlots] = useState([]);
+  const [trueSlots, setTrueSlots] = useState([]);
   const data = {
     email: "zm@gmail.com"
-  }
+  };
 
   useEffect(() => {
     const fetchFalseSlotsData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/fetchTrue', {
-        params: data, // Pass parameters as query parameters
-      });
-        // setFalseSlots(response.data.falseSlots);
+        const response = await axios.get('http://localhost:5000/api/fetchFalse', {
+          params: data,
+        });
+        setFalseSlots(response.data.falseSlots);
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching false slots:', error);
@@ -63,13 +64,27 @@ function Appointments() {
     };
 
     fetchFalseSlotsData();
-  }, []); // Run the effect only once on component mount
+  }, []);
+
+  const handleAccept = async (slotId) => {
+    try {
+      console.log(slotId);
+      const response = await axios.post('http://localhost:5000/api/acceptSlot', {slotId });
+      setTrueSlots([...trueSlots, response.data.acceptedSlot]);
+      setFalseSlots(falseSlots.filter(slot => slot._id !== slotId));
+    } catch (error) {
+      console.error('Error accepting slot:', error);
+    }
+  };
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
       <Typography variant="h5" style={headerStyle}>
         Appointments
       </Typography>
+      {falseSlots.length == 0 ? (
+        <Typography variant="h3">No appointments available.</Typography>
+      ) : (
       <Stack spacing={2} sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {falseSlots.map((slot) => (
           <Item key={slot._id} sx={{ margin: '8px' }}>
@@ -79,7 +94,7 @@ function Appointments() {
               <div style={{ fontWeight: 600 }}>{slot.gender}</div>
             </div>
             <div>
-              <Button variant="contained" style={acceptButtonStyle}>
+              <Button variant="contained" style={acceptButtonStyle} onClick={() => handleAccept(slot._id)}>
                 Accept
               </Button>
               <Button variant="contained" style={rejectButtonStyle}>
@@ -89,6 +104,7 @@ function Appointments() {
           </Item>
         ))}
       </Stack>
+      )}
     </Box>
   );
 }
