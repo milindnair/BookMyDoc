@@ -26,17 +26,17 @@ const DoctorDashboard = () => {
     // Implement the logout logic here
   };
 
-  useEffect(() => {
-    // Fetch the doctor's appointments from the server
-    // Replace the URL with your actual endpoint
-    axios.get('YOUR_API_ENDPOINT_HERE')
-      .then((response) => {
-        setAppointments(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching appointments:', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Fetch the doctor's appointments from the server
+  //   // Replace the URL with your actual endpoint
+  //   axios.get('YOUR_API_ENDPOINT_HERE')
+  //     .then((response) => {
+  //       setAppointments(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching appointments:', error);
+  //     });
+  // }, []);
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);

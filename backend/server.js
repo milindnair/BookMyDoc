@@ -35,7 +35,7 @@ connection();
 app.use(express.json()); // Corrected the method name
 app.use(cookieParser());
 app.use(cors(corsOptions));
-app.use('/api/v1/auth', authRoute)
+app.use('/api', authRoute)
 
 app.listen(port, () => {
     console.log("Server is running on port " + port);

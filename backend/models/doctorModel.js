@@ -12,6 +12,10 @@ const doctorSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    role:{
+      type: String,
+      default: 'doctor',
+    },
     // specialization: {
     //   type: String,
     //   required: true,
@@ -92,26 +96,6 @@ const doctorSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-
-
-  // Match user entered password to hashed password in database
-  doctorSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-  };
-
-  // Create a compound index on date and expiresAt with a TTL (Time To Live)
-  doctorSchema.index({ 'available.date': 1, 'available.expiresAt': 1 }, { expireAfterSeconds: 0 });
-  
-  // Encrypt password using bcrypt
-  doctorSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) {
-      next();
-    }
-  
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  });
-  
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
 

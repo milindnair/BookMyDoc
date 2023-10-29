@@ -43,10 +43,11 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/auth/register', formData);
+      const response = await axios.post('http://localhost:5000/api/register', formData);
 
       console.log(response.data);
-      if (response.data.success === true) {
+      if (response.data.status == 200) {
+        localStorage.setItem
         setOpenSnackbar(true);
         console.log('Registration successful! Redirecting to doctors page...');
         alert('Registration successful! Redirecting to doctors page...');
