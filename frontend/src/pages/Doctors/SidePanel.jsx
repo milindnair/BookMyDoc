@@ -1,6 +1,14 @@
-import React from 'react'
+import { Box, Typography } from '@mui/material'
+import React, { useState } from 'react';
+import BasicModal from '../../components/appoitmentModal/appoitmentModal';
 
 const SidePanel = () => {
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
     return (
         <div className='shadow-panelShadow p-3 lg:p-5 rounded-md lg:h-[40vh]  '>
             <div className="flex items-center justify-between">
@@ -8,7 +16,7 @@ const SidePanel = () => {
                 <span className='text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold'>
                     $ 100
                 </span>
-            
+
             </div>
             <div className='mt-[30px]'>
                 <p className="text__para mt-0 font-semibold text-headingColor">
@@ -32,8 +40,10 @@ const SidePanel = () => {
                     </li>
                 </ul>
             </div>
-            <button className="btn px-2 w-full rounded-md" >Book Appointment</button>
+            <button className="btn px-2 w-full rounded-md" onClick={handleOpen}  >Book Appointment</button>
+            <BasicModal  handleOpen={handleOpen} open={open} handleClose={handleClose}/>
         </div>
+
     )
 }
 
