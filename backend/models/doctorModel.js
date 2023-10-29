@@ -1,6 +1,21 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+
+const slotSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Reference to the User model
+  },
+  healthConditions: String,
+  time: String,
+  gender: String,
+  status: Boolean,
+  // Add other fields as needed
+});
+
+
+
 const doctorSchema = mongoose.Schema(
   {
     name: {
@@ -64,15 +79,12 @@ const doctorSchema = mongoose.Schema(
       {
         date: {
           type: Date,
+          required: true,
         },
-        slots: [
-          {
-            userId: {
-              type: mongoose.Schema.Types.ObjectId,
-              ref: 'User', // Reference to the User model
-            },
-          },
-        ],
+        slots: {
+          true: [slotSchema], // Slots with status: true
+          false: [slotSchema], // Slots with status: false
+        },
       },
     ],
     available: [

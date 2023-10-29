@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import bookappointmentImg from '../../assets/images/bookAppointment.jpg';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const style = {
   position: 'absolute',
@@ -22,11 +23,13 @@ const style = {
 export default function BasicModal({handleOpen,open,handleClose}) {
 
   const [formData, setFormData] = React.useState({
+    email: localStorage.getItem('email'),
     healthConditions:'',
     date: '',
     time:'',
     gender: '',
-  });
+    status: false
+    });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,9 +39,25 @@ export default function BasicModal({handleOpen,open,handleClose}) {
     });
   };
 
-  const submitHandler=()=>{
-    console.log(formData)
-  }
+  const submitHandler = (e) => {
+    e.preventDefault(); // Correct spelling
+    console.log(formData);
+    axios.post('http://localhost:5000/api/registerAppoitment/zm@gmail.com', formData)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status == 200) {
+          alert('Appointment booked successfully!');
+          setTimeout(() => {
+            // Delay the redirection to allow Snackbar to be displayed
+            window.location.href = "/";
+          }, 1000);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
 
     <div>
