@@ -11,7 +11,6 @@ import DoctorCard from '../components/Doctor/DoctorCard';
 import Appointments from '../components/Sidebar/appointments';
 import Patients from '../components/Sidebar/patients'; // Import the Patients component
 import { LogOutIcon } from 'lucide-react';
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }

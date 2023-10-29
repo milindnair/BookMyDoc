@@ -8,10 +8,10 @@ const navlinks = [
         path: '/home',
         display: 'Home'
     },
-    {
-        path: '/services',
-        display: 'Services'
-    },
+    // {
+    //     path: '/services',
+    //     display: 'Services'
+    // },
     {
         path: '/doctors',
         display: 'Find a Doctor'
@@ -59,10 +59,11 @@ const Header = () => {
         <header className='flex items-center bg-[url("./assets/images/mask.png")] bg-no-repeat bg-center bg-cover h-[100px] leading-[100px]' ref={headerRef}>
             <div className="container">
                 <div className='flex items-center justify-between'>
-                    <div>
-                        <img src={logo} alt="" />
-                    </div>
-
+                    <a href="/" onClick={toggleMenu}>
+                        <div>
+                            <img src={logo} alt="" />
+                        </div>
+                    </a>
 
                     <div className='navigation' ref={menuRef} onClick={toggleMenu}>
                         <ul className='menu flex items-center gap-[2.7rem]'>
