@@ -85,7 +85,14 @@ const DoctorDashboard = () => {
         />
       </Sidebar>
       {currentComponent === 'MyProfile' && doctor && (
-        <DoctorCard doctor={doctor} />
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <div style={{ fontSize: '44px', fontWeight: 'bold', textAlign: 'center' }}>
+            Hello Doctor!
+          </div>
+          <div>
+            <DoctorCard doctor={doctor} />
+          </div>
+        </div>
       )}
       {currentComponent === 'Appointments' && (
         <Appointments />
