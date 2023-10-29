@@ -39,7 +39,7 @@ export async function registerAppointment(req, res) {
       // Save the updated doctor data
       await doctor.save();
   
-      return res.status(200).json({ message: 'Appointment registered successfully', doctor });
+      return res.status(200).json({ message: 'Appointment registered successfully', doctor,status:200 });
     } catch (error) {
       console.error('Error registering appointment:', error);
       return res.status(500).json({ error: 'Internal server error' });
