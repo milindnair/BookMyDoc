@@ -31,15 +31,20 @@ const Login = () => {
         if (response.data.data.role == 'doctor') {
           localStorage.setItem('booking', response.data.data.booking);
           localStorage.setItem('role', 'doctor');
+          setTimeout(() => {
+            // Delay the redirection to allow Snackbar to be displayed
+            window.location.href = "/doctordashboard";
+          }, 1000);
         }
         else{
           localStorage.setItem('role', 'patient');
+          setTimeout(() => {
+            // Delay the redirection to allow Snackbar to be displayed
+            window.location.href = "/";
+          }, 1000);
         }
         alert('Registration successful! Redirecting to doctors page...');
-        setTimeout(() => {
-          // Delay the redirection to allow Snackbar to be displayed
-          window.location.href = "/doctors";
-        }, 1000);
+        
       }
 
     } catch (error) {

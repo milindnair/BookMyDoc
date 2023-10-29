@@ -1,13 +1,14 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#D3DCFEff', // Background color for each item
+  backgroundColor: '#D3DCFEff',
   padding: theme.spacing(2),
   display: 'flex',
   justifyContent: 'space-between',
@@ -15,52 +16,67 @@ const Item = styled(Paper)(({ theme }) => ({
   gap: theme.spacing(2),
   width: '80%',
   borderRadius: 12,
-  fontFamily: 'Manrope, sans-serif', // Use Manrope font
-  boxShadow: 'none', // Remove shadow
+  fontFamily: 'Manrope, sans-serif',
+  boxShadow: 'none',
 }));
 
 const headerStyle = {
   textAlign: 'center',
   padding: '16px',
-  fontWeight: 600, // Font weight for header text
-  fontSize: '44px', // Font size for header text
-  marginBottom: '16px', // Add margin below the header
+  fontWeight: 600,
+  fontSize: '44px',
+  marginBottom: '16px',
 };
 
 const acceptButtonStyle = {
-  background: '#3931A4ff', // Background color for accept button
+  background: '#3931A4ff',
   color: 'white',
-  fontFamily: 'Manrope, sans-serif', // Use Manrope font
-  fontWeight: 600, // Font weight for accept button
-  marginRight: '8px', // Margin between buttons
+  fontFamily: 'Manrope, sans-serif',
+  fontWeight: 600,
+  marginRight: '8px',
 };
 
 const rejectButtonStyle = {
-  background: '#FF4444', // Background color for reject button
+  background: '#FF4444',
   color: 'white',
-  fontFamily: 'Manrope, sans-serif', // Use Manrope font
-  fontWeight: 600, // Font weight for reject button
+  fontFamily: 'Manrope, sans-serif',
+  fontWeight: 600,
 };
 
-// Sample data for appointments
-const appointmentsData = [
-  { patient: 'John Doe', timing: '9:00 AM', id: 1 },
-  { patient: 'Jane Smith', timing: '10:30 AM', id: 2 },
-  { patient: 'Alice Johnson', timing: '2:15 PM', id: 3 },
-];
-
 function Appointments() {
+  const [falseSlots, setFalseSlots] = useState([]);
+  const data = {
+    email: "zm@gmail.com"
+  }
+
+  useEffect(() => {
+    const fetchFalseSlotsData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/fetchTrue', {
+        params: data, // Pass parameters as query parameters
+      });
+        // setFalseSlots(response.data.falseSlots);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching false slots:', error);
+      }
+    };
+
+    fetchFalseSlotsData();
+  }, []); // Run the effect only once on component mount
+
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
       <Typography variant="h5" style={headerStyle}>
         Appointments
       </Typography>
       <Stack spacing={2} sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {appointmentsData.map((appointment) => (
-          <Item key={appointment.id} sx={{ margin: '8px' }}>
+        {falseSlots.map((slot) => (
+          <Item key={slot._id} sx={{ margin: '8px' }}>
             <div>
-              <div style={{ fontWeight: 600 }}>{appointment.patient}</div>
-              <div style={{ fontWeight: 600 }}>{appointment.timing}</div>
+              <div style={{ fontWeight: 600 }}>{slot.healthConditions}</div>
+              <div style={{ fontWeight: 600 }}>{slot.time}</div>
+              <div style={{ fontWeight: 600 }}>{slot.gender}</div>
             </div>
             <div>
               <Button variant="contained" style={acceptButtonStyle}>
