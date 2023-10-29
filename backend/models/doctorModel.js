@@ -12,27 +12,31 @@ const doctorSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    specialization: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: true,
-    },
+    // specialization: {
+    //   type: String,
+    //   required: true,
+    // },
+    // address: {
+    //   type: String,
+    //   required: true,
+    // },
     password: {
       type: String,
       required: true,
     },
-    approved: {
-      type: Boolean,
-      default: false,
-    },
-    blocked: {
-      type: Boolean,
-      default: false,
-    },
-    imagePath: {
+    // approved: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // blocked: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // imagePath: {
+    //   type: String,
+    //   default: '',
+    // },
+    gender:{
       type: String,
       default: '',
     },
@@ -44,14 +48,14 @@ const doctorSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    qualification: {
-      type: String,
-      required: true,
-    },
-    experience: {
-      type: String,
-      required: true,
-    },
+    // qualification: {
+    //   type: String,
+    //   required: true,
+    // },
+    // experience: {
+    //   type: String,
+    //   required: true,
+    // },
     bookings: [
       {
         date: {

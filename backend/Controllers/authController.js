@@ -11,6 +11,7 @@ const generateToken = (user) => {
 
 export const register = async (req, res) => {
     const { email, password, name, role, photo, gender } = req.body;
+    console.log('register');
     try {
         let user = null;
         if (role === 'patient') {
@@ -19,6 +20,7 @@ export const register = async (req, res) => {
             user = await Doctor.findOne({ email });
         }
 
+        
         if (user) {
             return res.status(400).json({ message: 'User already exists' });
         }
@@ -44,11 +46,14 @@ export const register = async (req, res) => {
                 photo,
                 gender,
                 role,
+                
             });
+
         }
         await user.save();
         res.status(200).json({ success: true, message: 'User successfully created' });
     } catch (err) {
+        console.error(err);
         res.status(200).json({ success: false, message: 'Server Error, try again' });
     }
 };
@@ -71,7 +76,11 @@ export const login = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
         // compare password
-        const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
+        console.log(user);
+        console.log("entered password: " + req.body.password);
+        console.log("saved password: " + user.password);
+        const isPasswordMatch = await bcrypt.compare(req.body.password.trim(), user.password.trim());
+
 
         if (!isPasswordMatch) {
             return res.status(400).json({ status: false, message: 'Invalid credentials' });
