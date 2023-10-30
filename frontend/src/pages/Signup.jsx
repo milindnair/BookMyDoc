@@ -53,7 +53,7 @@ const Signup = () => {
         alert('Registration successful! Redirecting to doctors page...');
         setTimeout(() => {
           // Delay the redirection to allow Snackbar to be displayed
-          window.location.href = "/doctors";
+          window.location.href = "/login";
         }, 1000);
       }
 

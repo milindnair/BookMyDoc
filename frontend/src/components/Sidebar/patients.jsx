@@ -1,12 +1,13 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#D3DCFEff', // Background color for each item
+  backgroundColor: '#D3DCFEff',
   padding: theme.spacing(2),
   display: 'flex',
   justifyContent: 'space-between',
@@ -14,16 +15,16 @@ const Item = styled(Paper)(({ theme }) => ({
   gap: theme.spacing(2),
   width: '80%',
   borderRadius: 12,
-  fontFamily: 'Manrope, sans-serif', // Use Manrope font
-  boxShadow: 'none', // Remove shadow
+  fontFamily: 'Manrope, sans-serif',
+  boxShadow: 'none',
 }));
 
 const headerStyle = {
   textAlign: 'center',
   padding: '16px',
-  fontWeight: 600, // Font weight for header text
-  fontSize: '44px', // Font size for header text
-  marginBottom: '16px', // Add margin below the header
+  fontWeight: 600,
+  fontSize: '44px',
+  marginBottom: '16px',
 };
 
 const patientItemStyle = {
@@ -32,34 +33,63 @@ const patientItemStyle = {
   alignItems: 'flex-start',
 };
 
-// Sample data for patients
-const patientsData = [
-  { name: 'Patient 1', timing: '10:00 AM - 11:00 AM', hours: '2 hours', id: 1 },
-  { name: 'Patient 2', timing: '2:00 PM - 3:30 PM', hours: '1.5 hours', id: 2 },
-  { name: 'Patient 3', timing: '3:45 PM - 4:30 PM', hours: '45 minutes', id: 3 },
-];
-
 function Patients() {
+  const [trueSlots, setTrueSlots] = useState([]);
+
+  useEffect(() => {
+    const fetchTrueSlotsData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/fetchTrue', {
+          params: {
+            email: 'zm@gmail.com', 
+          },
+        });
+        const slotsWithRandomTime = response.data.trueSlots.map((patient) => ({
+          ...patient,
+          consultationTime: getRandomConsultationTime(),
+        }));
+        setTrueSlots(slotsWithRandomTime);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching true slots:', error);
+      }
+    };
+
+    fetchTrueSlotsData();
+  }, []);
+
+  const getRandomConsultationTime = () => {
+    // Generate a random consultation time between 0 and 2 hours
+    return Math.floor(Math.random() * 3); // 0, 1, or 2 hours
+  };
+
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
       <Typography variant="h5" style={headerStyle}>
         Patients
       </Typography>
-      <Stack spacing={2} sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {patientsData.map((patient) => (
-          <Item key={patient.id} sx={{ margin: '8px' }}>
-            <div style={patientItemStyle}>
-              <div style={{ fontWeight: 600 }}>{patient.name}</div>
-              <div>
-                <strong>Timing:</strong> {patient.timing}
+      {trueSlots.length == 0 ? (
+        <Typography variant="body1">No patients available.</Typography>
+      ) : (
+        <Stack spacing={2} sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {trueSlots.map((patient) => (
+            <Item key={patient._id} sx={{ margin: '8px' }}>
+              <div style={patientItemStyle}>
+                <div style={{ fontWeight: 600 }}>{patient.healthConditions}</div>
+                <div>
+                  <strong>Timing:</strong> {patient.time}
+                </div>
+                <div>
+                  <strong>Gender:</strong> {patient.gender}
+                </div>
+                <div>
+                  <strong>Consultation Time:</strong> {patient.consultationTime} hours
+                </div>
               </div>
-              <div>
-                <strong>Consultation Hours:</strong> {patient.hours}
-              </div>
-            </div>
-          </Item>
-        ))}
-      </Stack>
+            </Item>
+          ))}
+        </Stack>
+      )}
     </Box>
   );
 }

@@ -9,8 +9,10 @@ import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DoctorCard from '../components/Doctor/DoctorCard';
 import Appointments from '../components/Sidebar/appointments';
-import Patients from '../components/Sidebar/patients'; // Import the Patients component
+import Patients from '../components/Sidebar/patients';
 import { LogOutIcon } from 'lucide-react';
+import { doctors } from '../../src/assets/data/doctors'; // Import the doctors data
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -18,24 +20,12 @@ function Alert(props) {
 const DoctorDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [doctor, setDoctor] = useState({ name: 'Doctor Name' });
+  const [doctor, setDoctor] = useState(null); // Initialize doctor state as null
   const [currentComponent, setCurrentComponent] = useState('MyProfile');
 
   const handleLogout = () => {
     // Implement the logout logic here
   };
-
-  // useEffect(() => {
-  //   // Fetch the doctor's appointments from the server
-  //   // Replace the URL with your actual endpoint
-  //   axios.get('YOUR_API_ENDPOINT_HERE')
-  //     .then((response) => {
-  //       setAppointments(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching appointments:', error);
-  //     });
-  // }, []);
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
@@ -45,15 +35,22 @@ const DoctorDashboard = () => {
     setCurrentComponent(componentName);
   };
 
-  let renderComponent;
+  useEffect(() => {
+    // Fetch the doctor's appointments from the server
+    // Replace the URL with your actual endpoint
+    axios.get('YOUR_API_ENDPOINT_HERE')
+      .then((response) => {
+        setAppointments(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching appointments:', error);
+      });
+  }, []);
 
-  if (currentComponent === 'MyProfile') {
-    renderComponent = <DoctorCard doctor={doctor} />;
-  } else if (currentComponent === 'Appointments') {
-    renderComponent = <Appointments />;
-  } else if (currentComponent === 'Patients') {
-    renderComponent = <Patients />; // Render the Patients component when selected
-  }
+  // Select one doctor from the doctors array
+  useEffect(() => {
+    setDoctor(doctors[1]); // You can select a different doctor by changing the index
+  }, []);
 
   return (
     <div className="flex">
@@ -87,7 +84,22 @@ const DoctorDashboard = () => {
           onClick={() => handleComponentChange('LogOut')}
         />
       </Sidebar>
-      {renderComponent}
+      {currentComponent === 'MyProfile' && doctor && (
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <div style={{ fontSize: '44px', fontWeight: 'bold', textAlign: 'center' }}>
+            Hello Doctor!
+          </div>
+          <div>
+            <DoctorCard doctor={doctor} />
+          </div>
+        </div>
+      )}
+      {currentComponent === 'Appointments' && (
+        <Appointments />
+      )}
+      {currentComponent === 'Patients' && (
+        <Patients />
+      )}
     </div>
   );
 }

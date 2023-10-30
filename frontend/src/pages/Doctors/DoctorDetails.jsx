@@ -6,6 +6,7 @@ import Feedback from './Feedback'
 import SidePanel from './SidePanel'
 
 const DoctorDetails = () => {
+  
   const[tab,settab] = useState('about')
 
   return (

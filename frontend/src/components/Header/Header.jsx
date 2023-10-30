@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import logo from "../../assets/images/logo.png"
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import userImg from "../../assets/images/avatar-icon.png"
 import { BiMenu } from 'react-icons/bi'
 const navlinks = [
@@ -8,10 +8,10 @@ const navlinks = [
         path: '/home',
         display: 'Home'
     },
-    // {
-    //     path: '/services',
-    //     display: 'Services'
-    // },
+    {
+        path: '/services',
+        display: 'Services'
+    },
     {
         path: '/doctors',
         display: 'Find a Doctor'
@@ -55,15 +55,35 @@ const Header = () => {
         menuRef.current.classList.toggle('show__menu');
     }
 
+    const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // Perform logout actions (clear local storage, etc.)
+    localStorage.clear();
+
+    // Redirect to the home page
+    navigate('/');
+  };
+
+
+
     return (
         <header className='flex items-center bg-[url("./assets/images/mask.png")] bg-no-repeat bg-center bg-cover h-[100px] leading-[100px]' ref={headerRef}>
             <div className="container">
                 <div className='flex items-center justify-between'>
-                    <a href="/" onClick={toggleMenu}>
-                        <div>
-                            <img src={logo} alt="" />
-                        </div>
-                    </a>
+                    <div>
+                        <img src={logo} alt="" />
+                    </div>
+
 
                     <div className='navigation' ref={menuRef} onClick={toggleMenu}>
                         <ul className='menu flex items-center gap-[2.7rem]'>
@@ -80,20 +100,30 @@ const Header = () => {
                     <div className='flex items-center gap-4'>
                         {localStorage.getItem('email') ? (
                             <div className='flex items-center flex-row'>
-                                <Link to="/">
+                                <div onClick={handleMenuClick}>
                                     <figure className='w-[35px] h-[35px] rounded-full flex items-center gap-3'>
-                                        <img src={userImg} className='w-full rounded-full cursor-pointer' alt="" />
+                                        <img src={userImg} className='w-full rounded-full cursor-pointer' alt='' />
                                         <h2>{localStorage.getItem('name')}</h2>
                                     </figure>
-                                </Link>
+                                </div>
+                                <div>
+                                    {/* Dropdown menu */}
+                                    {anchorEl && (
+                                        <div className='absolute top-12 right-0 bg-white shadow p-2 rounded'>
+                                            <button className='block w-full text-left' onClick={handleLogout}>
+                                                Logout
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         ) : (
-                            <Link to="/login">
+                            <Link to='/login'>
                                 <button className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center rounded-[50px]'>Login</button>
                             </Link>
                         )}
                         <span className='md:hidden' onClick={toggleMenu}>
-                            <BiMenu className="w-6 h-7 cursor-pointer"></BiMenu>
+                            <BiMenu className='w-6 h-7 cursor-pointer'></BiMenu>
                         </span>
                     </div>
 
