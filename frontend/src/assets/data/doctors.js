@@ -12,6 +12,7 @@ export const doctors = [
     photo: doctorImg01,
     totalPatients: 1500,
     hospital: "Mount Adora Hospital, US.",
+    route:"http://localhost:5173/doctors/123"
   },
   {
     id: "02",
@@ -22,6 +23,8 @@ export const doctors = [
     photo: doctorImg02,
     totalPatients: 1000,
     hospital: "Mount Alpha Hospital, kurla.",
+    route:"http://localhost:5173/doctors/234"
+
   },
   {
     id: "03",
@@ -32,6 +35,8 @@ export const doctors = [
     photo: doctorImg03,
     totalPatients: 700,
     hospital: "Mount Beta Hospital, bandStand.",
+    route:"http://localhost:5173/doctors/345"
+
   },
   {
     id: "04",
@@ -42,5 +47,7 @@ export const doctors = [
     photo: doctorImg01,
     totalPatients: 2000,
     hospital: "Hill Adora Hospital, dadar Parsi Colony  .",
+    route:"http://localhost:5173/doctors/345"
+
   },
 ];

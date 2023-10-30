@@ -21,14 +21,16 @@ const DoctorDetails = () => {
 
               <div>
                 <span className='bg-[#CCF0F3] text-irisBlueColor py-2 px-6 lg:py-2 lg:px-6 text-[12pz] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded'>Surgeon</span>
-                <h3 className='text-headingColor text-[22px] leading-9 mt-3 font-bold'>Karthikeya Mishra</h3>
+                <h3 className='text-headingColor text-[22px] leading-9 mt-3 font-bold'>Bhupendra Jogi</h3>
                 <div className="flex items-center gap-[6px]">
                   <span className='flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor'>
                     <img src={starIcon} alt="" />4.8
                   </span>
                   <span className='text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor'>(272)</span>
                 </div>
-                <p className='text__para text-[14px] leading-5 md:text-[15px] lg:max-w-[390px]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam modi nihil rem repellendus odit obcaecati debitis, nobis, laborum autem excepturi praesentium quos. Error aspernatur cum facilis aperiam ex voluptas alias!</p>
+                <p className='text__para text-[14px] leading-5 md:text-[15px] lg:max-w-[390px]'>
+  Dr. Bhupendra Jogi is a highly accomplished surgeon based in Los Angeles, USA, practicing at Mount Adora Hospital. With a wealth of experience and expertise, he has successfully treated over 1500 patients, earning a reputation as a top-tier surgical specialist. Dr. Jogi is dedicated to providing the best possible care to his patients. He specializes in a wide range of surgical procedures and is known for his precision and commitment to patient well-being. His compassionate approach and remarkable surgical skills make him a trusted choice for those seeking surgical care.
+</p>
               </div>
             </div>
             <div className='mt-[50px] border-b border-solid border-[#0066ff34]'>
