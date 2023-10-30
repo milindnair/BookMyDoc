@@ -7,6 +7,7 @@ import DoctorDetails from '../pages/Doctors/DoctorDetails'
 import Login from '../pages/Login'
 import Signup from '../pages/Signup'
 import DoctorDashboard from '../pages/DoctorDasboard'
+import FindDoc from '../pages/Doctors/FindDoc'
 import {Routes, Route} from 'react-router-dom'
 
 
@@ -22,6 +23,7 @@ const Routers = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Signup/>}/>
         <Route path="/doctordashboard" element={<DoctorDashboard/>}/>
+        <Route path="/finddoc" element={<FindDoc/>}/>
     </Routes>
   )
 }
