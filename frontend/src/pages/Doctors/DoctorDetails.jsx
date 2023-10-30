@@ -9,6 +9,14 @@ const DoctorDetails = () => {
   
   const[tab,settab] = useState('about')
 
+  const doctorData = {
+    name: "Dr. Bhupendra Jogi",
+    specialty: "Surgeon",
+    rating: 4.9, // You can set the actual rating
+    reviews: 189, // You can set the actual number of reviews
+    description: "Dr. Bhupendra Jogi is a renowned surgeon with a strong commitment to heart. With extensive experience in treating various skin conditions, Dr. Lewis is dedicated to providing patients with the best skincare solutions. He is currently practicing at Mount Beta Hospital in Mumbai, where he offers a wide range of dermatological services."
+  };
+
   return (
     <section>
       <div className='max-w-[1170px] px-5 mx-auto'>
@@ -41,7 +49,7 @@ const DoctorDetails = () => {
             </div>
             <div className='mt-[50px]'>
               {
-                tab === 'about' &&  <DoctorAbout />
+                tab === 'about' &&  <DoctorAbout doctor={doctorData} />
               }
               {
                 tab === 'feedback' && <Feedback />

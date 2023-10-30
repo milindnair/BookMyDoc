@@ -1,12 +1,17 @@
 import React from 'react';
 import { formatDate } from '../../utils/formatDate';
 
-const DoctorAbout = () => {
+const DoctorAbout = (props) => {
+    const docData = props.doctor;
+
+    const {name} = docData;
+
+
     return (
         <div>
             <div>
-                <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2'>About <span className='text-irisBlueColor font-bold text-[24px] leading-9'>Bhupendra Jogi</span></h3>
-                <p className="text__para">Dr. Bhupendra Jogi is a dedicated and experienced medical professional. He is committed to providing the best healthcare to his patients, with a focus on excellence in surgical procedures and patient care. With a wealth of knowledge and experience, Dr. Jogi is a trusted choice for surgical treatments.</p>
+                <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2'>About <span className='text-irisBlueColor font-bold text-[24px] leading-9'>{name}</span></h3>
+                <p className="text__para">{name} is a dedicated and experienced medical professional. He is committed to providing the best healthcare to his patients, with a focus on excellence in surgical procedures and patient care. With a wealth of knowledge and experience, Dr. Jogi is a trusted choice for surgical treatments.</p>
             </div>
             <div className='mt-12'>
                 <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold'>Education</h3>
